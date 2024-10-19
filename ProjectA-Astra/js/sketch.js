@@ -1,39 +1,26 @@
-let width=800; //width of Canvas
-let height=500; //geight of Canvas
-
-// let fishStatus = 1; //fish status: 
-
-
+let width=800; 
+let height=500; 
 let fishStatus = 1;  //fish Status
-
 let grassLevel=100; //Y value of the area of grass
 let coralLevel=450; // Y value of the area contains coral
-
 let grass=[]; //Y value of each heap of grasses
-
 let waterLevel = 300;  //current water level
-let waterUpLevel = 250; //the up limit of water surface
+let waterUpLevel = 250; //the upper limit of water surface
 let waterDownLevel = 380; // the down limit of water surface
 let fishReturnLevel = 300; // the level fish go into/out of water
-
 let fishX=400; //X value of fish center
 let fishY=waterLevel + 30; //Y value of fish center
 let dire = 1; // the direction of fish swim
-
 let waterMove = 1; // the direction (up/down) of water surface
-
 let tikCatShow = 0; //the time to show cat
 let catShowX = 0; // the X of cat
-
 let showBait = false;  // if the bait is showed
 let showEnemy = false; // if the jellyfish is showed
-
 let otherX = 0;  // the X of bait or jellyfish
 let otherY = 0;  // the Y of bait or jellyfish
-
 let otherMoveY = -1
 
-// the setup of canvas, and setup grass[] value, draw coral area
+
 function setup() {
   let cnv= createCanvas(width, height);
   cnv.parent("p5-canvas-container")
@@ -42,25 +29,20 @@ function setup() {
     grass[i] = int(random(20, grassLevel));
   }
 
-  background(220);
   drawCoral();
 }
 
-// draw the canvas
+
 function draw() {
   
-  // clear the part need to be repaint
-  fill(220);
+  fill('rgb(211,253,202)');
   rect(0, 0, width, coralLevel);  
   
   textSize(30)
   text("🎣",100,430)
 
-  //draw the grass
   drawGrass();
 
-
-  // if Cat is to be showed, cat should be showed at right side of heap, until tikCatShow is out
   if(tikCatShow > 0){
     let catX = int(catShowX / 80) * 80 + 60;
     let catY = grass[int(catShowX/80)] + 50;
@@ -69,65 +51,59 @@ function draw() {
     tikCatShow--;
   }
 
-  //check mouse statu to move water surface
   if(mouseIsPressed)
   {
-    if(mouseY > waterLevel){ //mouse click underwater area to move the water 
+    if(mouseY > waterLevel){  
       showBait = false;
       showEnemy = false;
 
-      waterLevel += waterMove; //if waterMove >0 move down else move up
+      waterLevel += waterMove; 
 
-      if(waterLevel>=waterDownLevel){ //if water reachs low limit
+      if(waterLevel>=waterDownLevel){ 
         waterMove=-1;
       }
-      if(waterLevel<=waterUpLevel){ //if water reachs high limit
+      if(waterLevel<=waterUpLevel){ 
         waterMove=1;
       }
     }  
   }
 
   
-  //let baseline = map(sin(frameCount * 0.001), -1, 1,  grassLevel, coralLevel);  //the water line should move up/down 
+ 
   
-  drawLake(waterLevel); //draw the water
+  drawLake(waterLevel); 
 
-  if(showBait||showEnemy){ //if bait or jellyfish is on, show it
+  if(showBait||showEnemy){ 
     drawOther();
   }
 
-  if(fishStatus==1){ //swim mode
-    let fishSpeed = dire;  //normal speed
-    if(showBait){  //if bait is on
-      if((fishX - otherX) * dire < 0) //if fish swim towards bait
+  if(fishStatus==1){ 
+    let fishSpeed = dire;  
+    if(showBait){  
+      if((fishX - otherX) * dire < 0) 
       {
-        fishSpeed = 3 * dire; // speed up
-        if(fishY > otherY) fishY--; //move fish to bait level
+        fishSpeed = 3 * dire;
+        if(fishY > otherY) fishY--; 
         if(fishY < otherY) fishY++; 
       }      
     }
 
-    if(showEnemy) //if jellyfish is on
+    if(showEnemy) 
     {
-      if((fishX - otherX) * dire > 0) //if fish swim awy from jellyfish, speed up
+      if((fishX - otherX) * dire > 0) 
         fishSpeed = 3 * dire; 
     }
 
-    fishX += fishSpeed; //move fish X-axis
+    fishX += fishSpeed; 
     
-    if(showBait) // if reach bait, remove bait
+    if(showBait) 
       if((fishX > otherX - 30) && (fishX < otherX + 30)) showBait = false;
 
-    if(showEnemy){ // if reach jellyfish, change direction
+    if(showEnemy){ 
       if(fishX > otherX - 30 && fishX < otherX + 30){
           dire = - dire;
         }          
     }
-
-    // if(fishX>750 || fishX<50){ // if reach border change direct
-    //     dire=-dire; 
-    //     fishX -= fishSpeed; // in case over border more than 1
-    // } //if fish swim to the border, turn around
 
     if(fishX > 750){
       dire = -1;
@@ -167,7 +143,7 @@ function draw() {
   }
 }
 
-// draw bait or jellyfish
+
 function drawOther() {
   otherY += otherMoveY ;
 
@@ -220,34 +196,24 @@ function drawCoral() {
       pop();
     }        
   }
-//   for (let coralX = 0; coralX < width; coralX+=20) {
-//     // let coralX = random(50, width-60);
-//     let coralY = height;
-//     push();
-//     textSize(int(random(1,10)) * 8);
-//     text("🪸", coralX, coralY)
-//     pop();
-//     // }
-        
-//   }  
+
 }
 
-//draw the lake with surface of base line
+
 function drawLake(baseline) {
   noStroke();
   fill(102, 178, 255,20);
 
-  for (let i = 0; i < 25; i++){ //draw 25 surface of lake to show the wave part
+  for (let i = 0; i < 25; i++){ 
     beginShape();
       
-    vertex(0, coralLevel); //start point
-    for (let x = 0; x < width; x++) { //calculate the position of each point of wave
-      
+    vertex(0, coralLevel); 
+    for (let x = 0; x < width; x++) {
       let y = sin((x) / 20) * 10;
       let noiseValue = noise(x, y);
-      vertex(x, y + int(baseline) - i * 2 + noiseValue * 5); // draw wave
+      vertex(x, y + int(baseline) - i * 2 + noiseValue * 5); 
     }
-    vertex(width, coralLevel) //end point to close the lake
+    vertex(width, coralLevel) 
     endShape();
   }
 
@@ -271,12 +237,10 @@ function drawLake(baseline) {
   text("😨", width, 40);
 }
 
-//draw grass heaps from left to right, every 80 pixwl there's one grass[i] to decide Y of heap
-// extend left 80 pixel and right 80 pixel to make heap longer for visual effect
 function drawGrass(){ 
   for (let x = 0; x < width; x += 10) 
   {
-    fill(50,255,50);
+    fill(random(0,50),255,random(0,50));
     let noiseValue = noise(x * 0.01, frameCount * 0.01);
     let grassHeight = map(noiseValue, 0, 1, 5, 55);
     let grassAngle = map(noiseValue, 0, 1, -PI / 12, PI / 12);
@@ -301,8 +265,8 @@ function drawGrass(){
   }
 }
 
-// draw fish horinzatal 
-function swim(x, y, dire) { //draw swim fish
+
+function swim(x, y, dire) { 
   noStroke()
   fill(100, 150, 255); 
   
@@ -325,7 +289,7 @@ function swim(x, y, dire) { //draw swim fish
   drawTail(x, y, dire + 2);
 }
 
-//draw the tail, rotate for different status, shrink if hiding
+
 function drawTail(x, y, dire, isHiding=false){
  //calculate the tail status
   let step = int (frameCount / 20) % 4;
@@ -443,7 +407,7 @@ function mousePressed() {
   }
 }
 
-//if the mouse over bait button (smile face)
+
 function overBait() {
   if(mouseX>0 && mouseX<30 && mouseY>0 && mouseY<50)
     return true;
@@ -451,7 +415,7 @@ function overBait() {
     return false;
 }
 
-//if the mouse over enemy butoon (horrible face)
+
 function overEnemy() {
   if(mouseX>width-30 && mouseX<width && mouseY>0 && mouseY<50)
     return true;
