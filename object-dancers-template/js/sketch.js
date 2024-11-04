@@ -46,7 +46,7 @@ class LindseyDancer {
     // update properties here to achieve
     // your dancer's desired moves and behaviour
 
-    this.dancerY = cos(this.angle) * 10 + 30;
+    this.dancerY = sin(this.angle) * 10 + 30;
     this.angle += PI/30;
 
   }
@@ -122,7 +122,7 @@ class LindseyDancer {
     //arms end
 
 
-    this.drawReferenceShapes()
+   // this.drawReferenceShapes()
 
     pop();
     
