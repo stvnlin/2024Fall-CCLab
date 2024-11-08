@@ -12,12 +12,15 @@ function setup() {
 
   // colorMode(HSB);
   // color = random(255);
+
+  noCursor();
   
 }
 
 function draw() {
   background(0, 0, 100);
   noStroke();
+  
 
    //console.log(mouseX, lastMouseX, mouseX - lastMouseX);
 
