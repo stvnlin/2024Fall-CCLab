@@ -95,11 +95,13 @@ function draw() {
 }
 
 function mousePressed() {
+  //arrow button
   if (dist(mouseX, mouseY, 390, 470) < 35) {
     console.log(clickCount);
     clickCount ++;
   }
 
+  //select button
   if (dist(mouseX, mouseY, 390 + 200, 470) < 35) {
     choiceCount ++;
     console.log("choice count =", choiceCount);
@@ -139,6 +141,7 @@ function mousePressed() {
     }
   }
 
+  //music button
   if (dist(mouseX, mouseY, 390 + 400, 470) < 35 && heart < 5) {
     heart ++;
     console.log(heart);
