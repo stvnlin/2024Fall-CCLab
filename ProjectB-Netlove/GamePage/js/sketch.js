@@ -109,7 +109,7 @@ function draw() {
 
   //girl image
   fill(255);
-  rect(460, 130, 400, 160)
+  // rect(460, 130, 400, 160)
 
   //moodIcon
   text(moodIcon, 310, 200);
