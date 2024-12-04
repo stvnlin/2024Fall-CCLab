@@ -9,12 +9,14 @@ let happyIMG;
 let isHappy = false;
 let switchFrame = 0;
 let happyDuration = 60;
-let buttonSound;
+let failSound;
+let clickSound;
 
 function preload(){
-  defaultIMG = loadImage("../assets/default.png") // load image
-  happyIMG = loadImage("../assets/happy.png")
-  buttonSound = loadSound("../sound/buttonPress.wav")
+  defaultIMG = loadImage("../assets/default.png");  // load image
+  happyIMG = loadImage("../assets/happy.png");
+  failSound = loadSound("../sound/introbackground.wav");
+  clickSound = loadSound("../sound/introclicking.wav");
 }
 
 function setup() {
@@ -48,9 +50,9 @@ function draw() {
       isHappy = false;
     }
   } else if(clickCount >= 7){
-    // isHappy = true;
-    // scale(0.8);
-    // image(happyIMG, width/2 - 50, height/2 - 50);
+    isHappy = true;
+    scale(0.8);
+    image(happyIMG, width/2 - 50, height/2 - 50);
     //console.log("okk");
 
   } else{
@@ -62,6 +64,7 @@ function draw() {
 function mousePressed() {
   if (mouseX >= width / 2 - 50 && mouseX <= width / 2 + 50 &&
     mouseY >= height / 2 - 50 && mouseY <= height / 2 + 50) {
+    clickSound.play();
     let changedCount = 0;
     let randomHearts = []; 
   
@@ -78,19 +81,21 @@ function mousePressed() {
   }
   clickCount++;
 
-  if(clickCount >= 7){
+  if(clickCount >= 8){
 
     window.location.href="../GamePage";
 
-  //   isHappy = true;
-  //   scale(0.8);
-  //   image(happyIMG, width/2 - 50, height/2 - 50);
+    // isHappy = true;
+    // scale(0.8);
+    // image(happyIMG, width/2 - 50, height/2 - 50);
   //   console.log("okk");
   }
 
   isHappy = true;
   switchFrame = frameCount;
-  } 
+  } else{
+    failSound.play();
+  }
 
   
 }
