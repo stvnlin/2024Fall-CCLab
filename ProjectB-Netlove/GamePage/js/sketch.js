@@ -66,11 +66,17 @@ function draw() {
   //   text(hearts[i].symbol, hearts[i].x + heartSize / 2, hearts[i].y + heartSize / 2);
   // }
 
+  //structure
+  fill(150);;
+  ellipse(width/2 + 10, height/2, 1000, 600);
+  fill(255, 255, 255, 230);
+  ellipse(width/2, height/2, 1000, 600);  
   
-  fill(255);
-  ellipse(width/2, height/2, 1000, 600);
-  fill(0, 0, 0, 200);
-  rect(250, 100, 700, 320, 20);
+  fill(0, 0, 0, 240);
+  rect(250, 100, 720, 320, 20);
+  fill(40, 42, 40);
+  rect(255, 105, 710, 310, 30);
+
   
   //shadow
   fill(103, 103, 255, 150)
@@ -237,6 +243,9 @@ function mousePressed() {
     if (!cookieChoose) {
       heart --; 
       updateHeartIcon();
+      // fill(0);
+      // textSize(30);
+      // text("hungry!!🍪", 0, 0);
       console.log("need cookie!");
     }
 
